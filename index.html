@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counter Components Demo</title>
+  
+  <script src="counter-display.js" defer></script>
+  <script src="counter-controls.js" defer></script>
+  <script src="combined-counter.js" defer></script>
+  <script src="counter-display-b.js" defer></script>
+  <script src="counter-controls-b.js" defer></script>
+  <script src="student-identity.js" defer></script>
+  <script src="combined-counter-modified.js" defer></script>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .section {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 2px solid #ccc;
+    }
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .section-description {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 12px;
+    }
+    .demo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background-color: #fafafa;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Counter Components Demo</h1>
+
+  <div class="section">
+    <div class="section-title">Student Identity</div>
+    <div class="demo-container">
+      <student-identity></student-identity>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Variant A: Combined Counter - Uses Event (Signal)</div>
+    <div class="section-description">
+      This variant combines both display and controls into a single component. 
+      Communication happens internally through events.
+    </div>
+    <div class="demo-container">
+      <combined-counter title="Combined Counter" value="99"></combined-counter>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Variant B: Separated Counter - Uses Target</div>
+    <div class="section-description">
+      This variant separates display and controls. 
+      The controls component directly targets the display component by ID.
+    </div>
+    <div class="demo-container">
+      <counter-display-b id="displayB" title="Separated Counter" value="10"></counter-display-b>
+      <counter-controls-b target="displayB"></counter-controls-b>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Standalone Components - Uses Event (Signal)</div>
+    <div class="section-description">
+      Fully separated display and controls components. 
+      Communication happens through custom events managed by external JavaScript.
+    </div>
+    <div class="demo-container">
+      <counter-display id="display" title="Standalone Counter" value="0"></counter-display>
+      <counter-controls id="controls"></counter-controls>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Modified Component - Enhanced Features</div>
+    <div class="section-description">
+      Combined counter with added features: Undo (go back to previous value), Reset button, and adjustable step size (1, 5, or 10).
+    </div>
+    <div class="demo-container">
+      <combined-counter-modified title="Enhanced Counter" value="0"></combined-counter-modified>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      // Standalone Components setup
+      const display = document.getElementById('display');
+      const controls = document.getElementById('controls');
+
+      controls.addEventListener('count-change', e => {
+        display.count += e.detail.delta;
+      });
+    });
+  </script>
+
+</body>
+</html>
